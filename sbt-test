@@ -1,20 +1,37 @@
 #!/usr/bin/env bash
 
+# Short-hand for running all tests or specific suites/cases.
+#
+# Usage:
+#
+#   $ sbt-test [+|++<scala-version>] <suite-substring> [case-substring]
+#
+# Examples:
+#
+#   $ sbt-test foo            # Run all suites matching *foo*
+#   $ sbt-test foo "bar baz"  # Run cases whose names contain "bar baz" in suites matching *foo*
+#   $ sbt-tests + foo         # Run suites matching *foo* for all configured scala versions
+#   $ sbt-tests ++2.10.6 foo  # Run suites matching *foo* for Scala 2.10.6.
+
+cmd_prefix=
 if [ "${1:0:2}" == "++" ]; then
 	scalaVer="$1"
+	shift
+elif [ "${1:0:1}" == "+" ]; then
+	cmd_prefix="+"
 	shift
 fi
 
 if [ $# -eq 0 ]; then
-  sbt test $scalaVer
+  sbt $scalaVer "${cmd_prefix}test"
 else
   test="$1"
   shift
   if [ $# -eq 0 ]; then
-    sbt $scalaVer "$@" "test-only *$test*"
+    sbt $scalaVer "$@" "${cmd_prefix}testOnly *$test*"
   else
     name="$1"
     shift
-    sbt $scalaVer "$@" "test-only *$test* -- -z $name"
+    sbt $scalaVer "$@" "${cmd_prefix}testOnly *$test* -- -z \"$name\""
   fi
 fi
