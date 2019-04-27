@@ -3,9 +3,7 @@ alias s=sbt
 
 export SBT_OPTS="-Xmx3g -verbose:gc"
 
-export SCALA_210_VERSION="2.10.7"
-export SCALA_211_VERSION="2.11.12"
-export SCALA_212_VERSION="2.12.4"
+export SCALA_212_VERSION="2.12.8"
 
 alias si=sbt-inspect
 
@@ -19,10 +17,7 @@ alias sbc="sbt +compile"
 alias stc="sbt test:compile"
 alias tc="sbt test:compile"
 
-alias sdc="sbt ++$SCALA_210_VERSION compile"
 alias ttc="sbt ++$SCALA_212_VERSION compile"
-alias sec="sbt ++$SCALA_211_VERSION compile"
-alias etc="sbt ++$SCALA_211_VERSION compile"
 
 alias scc="sbt clean compile"
 alias sctc="sbt clean test:compile"
@@ -36,7 +31,6 @@ alias stn="sbt test:console"
 alias satc="sbt +test:compile"
 alias sbtc="sbt +test:compile"
 alias sttc="sbt ++$SCALA_212_VERSION test:compile"
-alias setc="sbt ++$SCALA_211_VERSION test:compile"
 alias swtc="sbt ++$SCALA_212_VERSION test:compile"
 
 alias ssw=sbt-show
@@ -60,7 +54,6 @@ alias stdt="sbt test:dependencyTree"
 
 alias spm="sbt +publishM2"
 alias stpm="sbt ++$SCALA_212_VERSION publishM2"
-alias sepm="sbt ++$SCALA_211_VERSION publishM2"
 
 alias spl="sbt +publishLocal"
 
@@ -71,12 +64,12 @@ alias spdg="sbt-dependency-grep provided"
 alias sas="sbt assembly"
 alias sbas="sbt +assembly"
 alias stas="sbt ++$SCALA_212_VERSION assembly"
-alias seas="sbt ++$SCALA_211_VERSION assembly"
 
 alias swdc="sbt 'show dependencyClasspath'"
 alias scdc="sbt 'show dependencyClasspath'"
 alias stdc="sbt 'show test:dependencyClasspath'"
 
+alias pst=parse_sbt_tags
 parse_sbt_tags() {
 	rA1 '/ version' "$@" | rv -- '--' | taats | pne 's/^.* (\w+) \/ version.*?\s+([\d.]+)-SNAPSHOT$/\1-\2/'
 }
