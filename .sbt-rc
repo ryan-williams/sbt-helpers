@@ -1,6 +1,4 @@
 
-alias s=sbt
-
 export SBT_OPTS="-Xmx3g -verbose:gc"
 
 export SCALA_212_VERSION="2.12.8"
